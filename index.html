@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Love Jeng ❤️</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ffccd5, #ffc2d1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    width: 80%;
+    margin-top: 10px;
+}
+button {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+button:hover { transform: scale(1.1); }
+.gift {
+    width: 180px;
+    height: 180px;
+    background: #ff4d6d;
+    display: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 30px auto;
+    position: relative;
+    transition: transform 0.8s;
+}
+.gift::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 35px;
+    background: #fff0f3;
+    top: 70px;
+}
+.gift:hover { transform: scale(1.05); }
+.mainBox {
+    display: none;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+.typed-text {
+    border-right: 2px solid #ff4d6d;
+    white-space: pre-wrap;
+    overflow: hidden;
+}
+.gallery img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.gallery img:hover { transform: scale(1.1); }
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+.popup img {
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 15px;
+}
+.heart {
+    position: fixed;
+    bottom: -10px;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-900px); opacity: 0; }
+}
+@media(max-width:450px){
+    .mainBox { width: 95%; padding: 20px; }
+    .gallery img { width: 70px; height: 70px; }
+}
+#intro {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background:#ffc2d1; display:flex; justify-content:center;
+    align-items:center; flex-direction:column; z-index:9999;
+}
+#intro h1 { font-size:2em; color:#ff4d6d; }
+#intro button {
+    padding:10px 20px; border-radius:10px; border:none;
+    background:#ff4d6d; color:white; cursor:pointer; margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<!-- Intro Screen -->
+<div id="intro">
+  <h1>A Special Gift for Jeng ❤️</h1>
+  <button onclick="showPassword()">Open 🎁</button>
+</div>
+
+<div class="container">
+
+<!-- PASSWORD -->
+<div id="passwordBox" style="display:none;">
+    <h2>Enter Password 🔐</h2>
+    <input type="password" id="password" placeholder="Enter password"><br>
+    <button onclick="checkPassword()">Unlock ❤️</button>
+</div>
+
+<!-- GIFT -->
+<div class="gift" id="gift" onclick="openGift()"></div>
+
+<!-- MAIN CONTENT -->
+<div class="mainBox" id="mainBox">
+<h2>Hi Jeng ❤️</h2>
+<p class="typed-text" id="loveLetter"></p>
+<hr>
+<h3>We’ve been together for:</h3>
+<h2 id="loveTimer"></h2>
+<hr>
+<h3>Our Memories 📸</h3>
+<div class="gallery">
+    <img src="https://uploads.onecompiler.io/44deahak9/44dgpfxq8/bd21d64c-281b-446b-a6ff-ae85cdb77b5f.jpg" onclick="openPopup(this.src)">
+    <img src="https://uploads.onecompiler.io/44deahak9/44dgpfxq8/4045e94d-94ca-4c40-9f99-e117a17beb06.jpg" onclick="openPopup(this.src)">
+    <img src="https://uploads.onecompiler.io/44deahak9/44dgpfxq8/e11d7c81-afb8-4d30-94a2-f39011e252b3.jpg" onclick="openPopup(this.src)">
+    <img src="https://uploads.onecompiler.io/44deahak9/44dgpfxq8/e7da7006-cd73-40b0-8264-0ec888234bd3.jpg" onclick="openPopup(this.src)">
+    <img src="https://uploads.onecompiler.io/44deahak9/44dgpfxq8/6b58692a-7b34-4d81-af32-f56a1ea763cd.jpg" onclick="openPopup(this.src)">
+</div>
+</div>
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup" onclick="closePopup()">
+    <img id="popupImg">
+</div>
+
+<!-- Background Music -->
+<audio id="music" loop>
+  <source src="Iris.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Intro → Show password
+function showPassword(){
+    document.getElementById("intro").style.display="none";
+    document.getElementById("passwordBox").style.display="block";
+}
+
+// Password Unlock
+function checkPassword() {
+    if(document.getElementById("password").value === "pogiusha"){
+        document.getElementById("passwordBox").style.display = "none";
+        document.getElementById("gift").style.display = "block";
+    } else { alert("Wrong password 😢"); }
+}
+
+// Gift Click → Photo Explosion + Main Box
+function openGift(){
+    document.getElementById("gift").style.display = "none";
+    for(let i=0;i<15;i++){
+        let img = document.createElement("img");
+        img.src = "photo"+((i%5)+1)+".jpg";
+        img.style.width="60px";
+        img.style.height="60px";
+        img.style.position="fixed";
+        img.style.left = Math.random()*100 + "vw";
+        img.style.top = Math.random()*100 + "vh";
+        img.style.borderRadius="10px";
+        img.style.transition="all 2s ease";
+        document.body.appendChild(img);
+        setTimeout(()=>{img.style.transform="translateY(-800px) rotate("+Math.random()*360+"deg)";img.style.opacity="0";},50);
+        setTimeout(()=>img.remove(),2000);
+    }
+    setTimeout(()=>{
+        document.getElementById("mainBox").style.display="block";
+        startHearts();
+        startTimer();
+        typeLoveLetter();
+        playMusic();
+    },800);
+}
+
+// Floating Hearts
+function startHearts(){
+    setInterval(()=>{
+        let heart = document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=(Math.random()*20+15)+"px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    },500);
+}
+
+// Anniversary Timer
+function startTimer(){
+    const startDate = new Date("June 14, 2025 00:00:00");
+    setInterval(()=>{
+        const now = new Date();
+        const diff = now - startDate;
+        const days = Math.floor(diff / (1000*60*60*24));
+        document.getElementById("loveTimer").innerHTML=days+" days ❤️";
+    },1000);
+}
+
+// Popup Photos
+function openPopup(src){
+    document.getElementById("popup").style.display="flex";
+    document.getElementById("popupImg").src=src;
+}
+function closePopup(){ document.getElementById("popup").style.display="none"; }
+
+// Typing Love Letter
+function typeLoveLetter(){
+    const text = `Happy Valentine's Day and Happy Monthsary to us! Since June 14, 2025, every single moment with you has been a blessing. Even though we've only been together for a few months, it feels like you've been a part of my life forever.
+
+Thank you—for your love, your patience, and for accepting me even with all my flaws. Thank you for the little moments we share: the laughter, the late-night talks, our inside jokes, and every sweet "I love you" that warms my heart. Every ordinary day becomes extraordinary just because you're in it.
+
+Sometimes I stop and realize how lucky I am to have you. You've shown me what true love really feels like, and every day I find myself falling more in love with you. You're not just my girlfriend—you're my best friend, my comfort, and my home. Your smile, your touch, your laughter—they inspire me to be a better person, to be happier, and to be grateful for life.
+
+On this Valentine's Day and Monthsary, I want to promise you that no matter what challenges come our way, I will always be here for you. I will always listen, support, and love you with all my heart. I may not always find the right words to express how much you mean to me, but I hope you feel it in every hug, every message, and every moment we share.
+
+I'm excited for everything that's ahead—the future months and years, our birthdays, adventures, and even the simplest days spent together. I choose you, now and forever, without any doubt.
+
+I love you so much, Jejeng ko. Happy Valentine's Day and Happy Monthsary, my forever. 💖`;
+    let i=0;
+    let el=document.getElementById("loveLetter");
+    el.innerHTML="";
+    let interval=setInterval(()=>{
+        el.innerHTML += text[i];
+        i++;
+        if(i>=text.length) clearInterval(interval);
+    },35);
+}
+
+// Play MP3 Music
+function playMusic(){ document.getElementById("music").play(); }
+</script>
+</body>
+</html>
